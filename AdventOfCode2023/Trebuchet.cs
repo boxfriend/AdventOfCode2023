@@ -7,8 +7,7 @@ internal class Trebuchet : IAdventSolution
 
     private static int GetNumberFromLine (string line)
     {
-        var num = 0;
-        num += GetFirstDigit(line, false) * 10;
+        var num = GetFirstDigit(line, false) * 10;
         num += GetFirstDigit(line, true);
 
         return num;
@@ -30,13 +29,12 @@ internal class Trebuchet : IAdventSolution
 
                 //we know the shortest digit string is 3 characters and the longest is 5
                 //so we can loop just 3 times adding the loop index to 3
-                for(var j = 0; j < 3; j++)
+                for(var j = 3; j <= 5; j++)
                 {
-                    var subLength = 3 + j;
-                    if (subLength + index > line.Length)
+                    if (j + index > line.Length)
                         continue;
 
-                    var str = line.Substring(index, subLength);
+                    var str = line.Substring(index, j);
                     var strIndex = Array.IndexOf(_digits, str);
                     if (strIndex >= 0)
                         return strIndex + 1;
