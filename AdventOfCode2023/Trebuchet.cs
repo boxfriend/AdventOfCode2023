@@ -22,11 +22,11 @@ internal class Trebuchet : IAdventSolution
             if (char.IsDigit(ch))
                 return ch - '0';
 
-            if(_digits.Any(x => x.StartsWith(ch)))
-            {
-                if (line.Length - index < 3)
-                    continue;
+            if (line.Length - index < 3)
+                continue;
 
+            if (_digits.Any(x => x.StartsWith(ch)))
+            {
                 //we know the shortest digit string is 3 characters and the longest is 5
                 //so we can loop just 3 times adding the loop index to 3
                 for(var j = 3; j <= 5; j++)
