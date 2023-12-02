@@ -4,17 +4,34 @@ public class CubeConundrum : IAdventSolution
 {
     public static string Evaluate (string[] data)
     {
-        var sum = 0;
+        var sumPossible = 0;
+        var sumPowers = 0L;
         foreach(var game in data)
         {
             var info = game.Split(':');
             var gameNumber = ExtractGameNumber(info[0]);
             var counts = new CubeCount { R = 12, G = 13, B = 14 };
             if (IsGamePossible(info[1], counts))
-                sum += gameNumber;
+                sumPossible += gameNumber;
+
+            sumPowers += GetPower(info[1]);
         }
 
-        return sum.ToString();
+        return $"Sum of Possible Games: {sumPossible}\nSum of Game Powers: {sumPowers}";
+    }
+
+    private static int GetPower(string game)
+    {
+        var gameData = game.Split(';');
+        var maxCount = new CubeCount();
+
+        for(var i = 0; i < gameData.Length; i++)
+        {
+            var count = ExtractGameData(gameData[i]);
+            maxCount = CubeCount.GetMaxValues(maxCount, count);
+        }
+
+        return maxCount.R * maxCount.G * maxCount.B;
     }
 
     private static int ExtractGameNumber(string game)
@@ -87,5 +104,12 @@ public class CubeConundrum : IAdventSolution
         public int B { get; set; }
 
         public readonly bool CanContain(CubeCount other) => R >= other.R && B >= other.B && G >= other.G;
+
+        public static CubeCount GetMaxValues (CubeCount left, CubeCount right) => new()
+        {
+            R = Math.Max(left.R, right.R),
+            G = Math.Max(left.G, right.G),
+            B = Math.Max(left.B, right.B)
+        };
     }
 }
