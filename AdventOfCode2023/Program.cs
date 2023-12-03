@@ -16,3 +16,8 @@ Console.WriteLine("Day Two: Cube Conundrum");
 var dayTwoInput = await File.ReadAllLinesAsync(Path.Combine(path, "DayTwo.txt"));
 var dayTwoSolution = CubeConundrum.Evaluate(dayTwoInput);
 Console.WriteLine(dayTwoSolution);
+
+Console.WriteLine("Day Three: Gear Ratios");
+var dayThreeInput = await File.ReadAllLinesAsync(Path.Combine(path, "DayThree.txt"));
+var dayThreeSolution = GearRatios.Evaluate(dayThreeInput);
+Console.WriteLine(dayThreeSolution);
