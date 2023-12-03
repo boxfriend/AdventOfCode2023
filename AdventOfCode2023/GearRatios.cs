@@ -17,21 +17,32 @@ public class GearRatios : IAdventSolution
 
         var toSum = new HashSet<Number>();
         var collisions = new HashSet<ISpatialObject>();
+        var gearRatio = 0;
         foreach(var symbol in symbolSet)
         {
             foreach(var dir in _directions)
                 tree.GetCollisions(symbol + dir, collisions);
 
+            var ratio = 1;
             foreach(var collision in collisions)
             {
+                
                 if (collision is Number num)
+                {
                     toSum.Add(num);
+                    if (collisions.Count == 2)
+                        ratio *= num.Value;
+                }
             }
+
+            if (collisions.Count == 2)
+                gearRatio += ratio;
+
             collisions.Clear();
         }
 
         var sum = toSum.Sum(x => x.Value);
-        return sum.ToString();
+        return $"Part Sum: {sum}, Gear Ratio: {gearRatio}";
     }
 
     private static void ExtractData(string line, QuadTree toInsert, int row, HashSet<Point> symbols)
