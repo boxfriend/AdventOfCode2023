@@ -6,21 +6,34 @@ internal class ScratchCards : IAdventSolution
         var pointsSum = 0;
         var winningSet = new HashSet<string>();
         var numberSet = new HashSet<string>();
-        foreach(var line in data)
+
+        var cardCopies = new int[data.Length];
+        for(var i = 0; i < data.Length; i++)
         {
             winningSet.Clear();
             numberSet.Clear();
 
-            ExtractCardLists(line, winningSet, numberSet);
-            pointsSum += GetPoints(winningSet, numberSet);
+            ExtractCardLists(data[i], winningSet, numberSet);
+            var numberWinning = NumberOfMatches(winningSet, numberSet);
+            pointsSum += GetPoints(numberWinning);
+            
+            cardCopies[i]++;
+            for(; numberWinning > 0; numberWinning--)
+            {
+                cardCopies[i + numberWinning] += cardCopies[i];
+            }
         }
 
-        return pointsSum.ToString();
+        return $"Points: {pointsSum}, Total Scratchers: {cardCopies.Sum()}";
     }
-    private static int GetPoints(HashSet<string> winningSet, HashSet<string> numberSet)
+
+    private static int NumberOfMatches(HashSet<string> winningSet, HashSet<string> numberSet)
     {
         winningSet.IntersectWith(numberSet);
-        var count = winningSet.Count;
+        return winningSet.Count;
+    }
+    private static int GetPoints(int count)
+    {
         if(count <= 1)
             return count;
 
