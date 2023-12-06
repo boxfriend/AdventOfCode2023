@@ -12,6 +12,7 @@ await ProcessSolution<CubeConundrum>("Day Two: Cube Conundrum", Path.Combine(pat
 await ProcessSolution<GearRatios>("Day Three: Gear Ratios", Path.Combine(path, "DayThree.txt"));
 await ProcessSolution<ScratchCards>("Day Four: Scratchcards", Path.Combine(path, "DayFour.txt"));
 await ProcessSolution<SeedFertilizer>("Day Five: If You Give A Seed A Fertilizer", Path.Combine(path, "DayFive.txt"));
+await ProcessSolution<WaitForIt>("Day Six: Wait For It", Path.Combine(path, "DaySix.txt"));
 
 
 
