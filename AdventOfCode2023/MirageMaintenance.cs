@@ -5,6 +5,7 @@ internal class MirageMaintenance : IAdventSolution
     {
         var numbers = new List<long>();
         var sum = 0L;
+        var beginningSum = 0L;
         foreach(var line in data)
         {
             numbers.Clear();
@@ -12,13 +13,14 @@ internal class MirageMaintenance : IAdventSolution
             foreach(var v in values)
                 numbers.Add(long.Parse(v));
 
-            sum += Extrapolate(numbers);
+            sum += Extrapolate(numbers, true);
+            beginningSum += Extrapolate(numbers, false);
         }
 
-        return sum.ToString();
+        return $"End Numbers history: {sum} \nBeginning Numbers History: {beginningSum}";
     }
 
-    private static long Extrapolate(List<long> numbers)
+    private static long Extrapolate(List<long> numbers, bool fromEnd)
     {
         if (numbers.All(x => x == 0))
             return 0;
@@ -29,6 +31,9 @@ internal class MirageMaintenance : IAdventSolution
             nums.Add(numbers[i] - numbers[i - 1]);
         }
 
-        return numbers[^1] + Extrapolate(nums);
+        if (fromEnd)
+            return numbers[^1] + Extrapolate(nums, fromEnd);
+        else
+            return numbers[0] - Extrapolate(nums, fromEnd);
     }
 }
