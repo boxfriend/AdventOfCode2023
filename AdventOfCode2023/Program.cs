@@ -15,6 +15,7 @@ await ProcessSolution<SeedFertilizer>("Day Five: If You Give A Seed A Fertilizer
 await ProcessSolution<WaitForIt>("Day Six: Wait For It", Path.Combine(path, "DaySix.txt"));
 await ProcessSolution<CamelCards>("Day Seven: Camel Cards", Path.Combine(path, "DaySeven.txt"));
 await ProcessSolution<HauntedWasteland>("Day Eight: Haunted Wasteland", Path.Combine(path, "DayEight.txt"));
+await ProcessSolution<MirageMaintenance>("Day Nine: Mirage Maintenance", Path.Combine(path, "DayNine.txt"));
 
 
 
