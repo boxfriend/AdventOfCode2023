@@ -1,17 +1,17 @@
-﻿using System.Numerics;
+﻿using AdventOfCode2023.Utilities;
 
 namespace AdventOfCode2023;
-internal class PipeMaze : IAdventSolution
+internal partial class PipeMaze : IAdventSolution
 {
     public static string Evaluate (string[] data)
     {
         var pipes = new Pipe?[data[0].Length, data.Length];
-        var start = new Direction(-1, -1);
+        var start = new PointInt(-1, -1);
         for(var i = 0; i < data.Length; i++)
         {
             for(var j = 0; j < data[i].Length; j++)
             {
-                var pos = new Direction(j, i);
+                var pos = new PointInt(j, i);
                 pipes[j,i] = Pipe.FromChar(data[i][j], pos);
 
                 if (data[i][j] == 'S')
@@ -27,7 +27,7 @@ internal class PipeMaze : IAdventSolution
                 if (i == 0 && j == 0)
                     continue;
 
-                var newPos = start + new Direction(j, i);
+                var newPos = start + new PointInt(j, i);
                 if (newPos.X < 0 || newPos.Y < 0)
                     continue;
 
@@ -94,13 +94,13 @@ internal class PipeMaze : IAdventSolution
 
     private class Pipe
     {
-        public Direction Position { get; init; }
-        public Direction DirA { get; init; }
-        public Direction DirB { get; init; }
+        public PointInt Position { get; init; }
+        public PointInt DirA { get; init; }
+        public PointInt DirB { get; init; }
 
         public int Distance { get; set; } = int.MaxValue;
 
-        public static Pipe? FromChar (char c, Direction position) => c switch
+        public static Pipe? FromChar (char c, PointInt position) => c switch
         {
             '|' => new() { Position = position, DirA = new(0, 1), DirB = new(0, -1) },
             '-' => new() { Position = position, DirA = new(-1, 0), DirB = new(1, 0) },
@@ -110,11 +110,5 @@ internal class PipeMaze : IAdventSolution
             'F' => new() { Position = position, DirA = new(1, 0), DirB = new(0, 1) },
             _ => default
         };
-    }
-
-    private record struct Direction (int X, int Y) : IAdditionOperators<Direction, Direction, Direction>
-    {
-        public static Direction operator + (Direction position, Direction direction) =>
-            new(position.X + direction.X, position.Y + direction.Y);
     }
 }
